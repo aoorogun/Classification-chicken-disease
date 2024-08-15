@@ -34,3 +34,30 @@ except BoxValueError:
     raise ValueError("yaml file is empty")
 except Exception as e:
     raise e
+
+@ensure_annotations
+def create_directories(path_to_directories: list, verbose=True):
+    """creat list of directories
+
+    Args:
+        path_to directories (list): list of path of directories
+        ignore_log (bool, optional): ignore if multiple dirs is to be created. defaults to False
+    """
+    for path in path_to_directories:
+        os.makedirs(path, exist_ok=True)
+        if verbose:
+            logger.info(f"created directory at: {path}")
+
+@ensure_annotations
+def save_json(path: Path, data: dict):
+    """save json data
+
+    Args:
+        path (Path): path to json file
+        data (dict): data to be saved in json file
+    """
+    with open(path,"w") as f:
+        json.dump(data,f,indent=4)
+
+        logger.info(f"json file saved at: {path}")
+
